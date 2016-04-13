@@ -26,11 +26,13 @@ main .banner .headline {
   letter-spacing: -0.06em;
   text-align: center;
 }
+
 main .content {
   margin-top: 60px;
   font-family: Galaxie;
   font-size: 24px;
-  color: var(--black)
+  color: var(--black);
+  padding: 0 24px;
 }
 
 main .content p {

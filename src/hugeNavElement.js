@@ -26,19 +26,22 @@
 
   // /dynamically create innerHTML
   _initializeElement() {
-    const brand =  `<li class="brand-container" onclick="HugeNavElement._hideMenu()">
+    const menuButton = `<li id="menu-button">
+                          <a href="javascript:void(0);" onclick="HugeNavElement._toggleMenu()">&#9776;</a>
+                        </li>`;
+    const brand =  `<li id="brand-container" onclick="HugeNavElement._hideMenu()">
                       <a rel="home" href="#" title="HUGE">
                         <span class="navbar-brand"></span>
                       </a>
                     </li>`;
-    this.innerHTML = `<nav>${this._buildNode({items: this.items}, brand)}</nav>`;
+    this.innerHTML = `<nav>${this._buildNode({items: this.items}, menuButton+brand)}</nav>`;
   }
 
   // Recursive function to create the HTML node
   _buildNode(nodeData, prepend) {
     if (nodeData.items && nodeData.items.length > 0) {
       const childsHtml = nodeData.items.map((item) => (
-        `<li onclick="HugeNavElement.handleNodeClick(event, this)"><a href=${item.url} >${item.label} </a>${this._buildNode(item)}</li>`
+        `<li onclick="HugeNavElement._handleNodeClick(event, this)"><a href=${item.url} >${item.label} </a>${this._buildNode(item)}</li>`
       ));
       return`<ul>${prepend ? prepend : ''}${childsHtml.join('')}</ul>`;
     }return '';
@@ -83,11 +86,17 @@
   }
 
   //handles node click
-  static handleNodeClick(event, element)  {
+  static _handleNodeClick(event, element)  {
     event.stopPropagation();
     HugeNavElement._hideMenu();
     HugeNavElement._showMenu(element);
   }
+
+  static _toggleMenu() {
+    let menuButton = document.getElementById('menu-button');
+    menuButton.classList.toggle('menu-open');
+  }
+
 }
 
 //Register custom Element

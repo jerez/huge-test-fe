@@ -1,11 +1,7 @@
 @import 'fonts.css';
 @import 'variables.css';
 
-/* Huge logo styling */
-.brand-container a:hover {
-	background: none;
-  color: none;
-}
+
 
 .navbar-brand {
     width: 60px;
@@ -63,6 +59,17 @@ li:hover a, .selected-node a {
   color: var(--magenta);
 }
 
+/* prevent hover on Huge logo and menu button */
+#menu-button:hover a, #brand-container a:hover {
+	background: var(--magenta);
+  color: var(--white);
+}
+
+/*Menu button toggle */
+/*#menu-button { transition:all 1.0s ease-in-out;}*/
+#menu-button a { float: left; }
+#menu-button.menu-open a { float: right;}
+
 /*Style for dropdown links*/
 .selected-node ul {
   display: block;
@@ -100,6 +107,8 @@ li ul li a {
 	padding: 0 20px;
 }
 
+/*Hide first element*/
+nav > ul li#menu-button {display: none;}
 
 /*Responsive Styles*/
 @media screen and (max-width : 992px){
@@ -109,19 +118,29 @@ li ul li a {
     padding: 18px;
   }
 }
+@media screen and (max-width:768px) {
+	nav > ul li#menu-button {	display: block; overflow: auto;}
+	/*nav > ul li.menu-button a { float: right}*/
+  nav > ul li:not(#menu-button) {display: none;}
+  /*ul li.icon {*/
+    /*float: right;*/
+    /*display: inline-block;*/
+  /*}*/
+}
 
-@media screen and (max-width : 768px){
+
+/*@media screen and (max-width : 768px){*/
 	/*Make dropdown links appear inline*/
-	ul {
+	/*ul {
 		position: static;
 		display: none;
-	}
+	}*/
 	/*Create vertical spacing*/
-	li {
+	/*li {
 		margin-bottom: 1px;
-	}
+	}*/
 	/*Make all menu links full width*/
-	ul li, li a {
+	/*ul li, li a {
 		width: 100%;
 	}
-}
+}*/
