@@ -27,7 +27,7 @@
 
 /*Strip the ul of padding and list styling*/
 nav {
-  position: absolute;
+  position: relative;
   background-color: var(--magenta);
   width: 100%;
   margin: 0;
@@ -38,7 +38,6 @@ ul {
 	list-style-type:none;
 	margin:0;
 	padding:0;
-  z-index: 100;
 }
 
 /*Create a horizontal list with spacing*/
@@ -103,6 +102,14 @@ li ul li a {
 
 
 /*Responsive Styles*/
+@media screen and (max-width : 992px){
+  li a {
+    font-size: 18px;
+    line-height: 18px;
+    padding: 18px;
+  }
+}
+
 @media screen and (max-width : 768px){
 	/*Make dropdown links appear inline*/
 	ul {

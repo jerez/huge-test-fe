@@ -7,18 +7,40 @@ body,html {
 }
 
 body {
-  background: var(--magenta);
+  background: var(--white);
   color: var(--white);
 }
 
-h1 {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  margin: 0;
-  font: 20vmin/1 HUGEAvantGardeBold;
+main .banner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 640px;
+  background: url(/images/background-image.jpg) center;
+  background-size: cover;
+}
+
+main .banner .headline {
+  font-family: HUGEAvantGardeBold;
+  font-size: 120px;
   letter-spacing: -0.06em;
   text-align: center;
 }
+main .content {
+  margin-top: 60px;
+  font-family: Galaxie;
+  font-size: 24px;
+  color: var(--black)
+}
+
+main .content p {
+  margin: 0 auto;
+  max-width: 968px;
+}
+
+/*.content-wrapper .text-wrapper {
+  float: left;
+  width: 100%;
+  padding: 0 24px;
+  margin-top: 60px;
+}*/
