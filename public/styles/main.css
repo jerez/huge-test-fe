@@ -1,9 +1,14 @@
 @import "fonts.css";
 @import "huge-nav.css";
 
+body,html {
+  margin:0;
+  padding:0;
+}
+
 body {
-  background: #ec008c;
-  color: #fff;
+  background: var(--magenta);
+  color: var(--white);
 }
 
 h1 {

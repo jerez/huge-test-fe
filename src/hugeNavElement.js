@@ -26,7 +26,11 @@
 
   // /dynamically create innerHTML
   _initializeElement() {
-    const brand = '<li class="brand-container"><a rel="home" href="#" title="HUGE"><span class="navbar-brand" ></span></a></li>';
+    const brand =  `<li class="brand-container" onclick="HugeNavElement._hideMenu()">
+                      <a rel="home" href="#" title="HUGE">
+                        <span class="navbar-brand"></span>
+                      </a>
+                    </li>`;
     this.innerHTML = `<nav>${this._buildNode({items: this.items}, brand)}</nav>`;
   }
 
@@ -34,12 +38,13 @@
   _buildNode(nodeData, prepend) {
     if (nodeData.items && nodeData.items.length > 0) {
       const childsHtml = nodeData.items.map((item) => (
-        `<li onclick="HugeNavElement.handleNodeClick(this, event)"><a href=${item.url} >${item.label} </a>${this._buildNode(item)}</li>`
+        `<li onclick="HugeNavElement.handleNodeClick(event, this)"><a href=${item.url} >${item.label} </a>${this._buildNode(item)}</li>`
       ));
       return`<ul>${prepend ? prepend : ''}${childsHtml.join('')}</ul>`;
     }return '';
   }
 
+  //Show submenu if element contains any
   static _showMenu(element){
     const ulTags = element.getElementsByTagName('ul');
     if (ulTags.length > 0) {
@@ -48,6 +53,7 @@
     }
   }
 
+  //Hides all presented menus
   static _hideMenu(){
     HugeNavElement._hideMask();
     const nodes = document.querySelectorAll('ul > li.selected-node');
@@ -56,6 +62,7 @@
     }
   }
 
+  //Show Mask behind menu
   static _showMask(){
     let blockMask = document.getElementById('block-mask');
     if (!blockMask) {
@@ -67,6 +74,7 @@
     blockMask.style.display = 'block';
   }
 
+  //Hides mask
   static _hideMask(){
     let blockMask = document.getElementById('block-mask');
     if (blockMask) {
@@ -74,7 +82,9 @@
     }
   }
 
-  static handleNodeClick(element, event)  {
+  //handles node click
+  static handleNodeClick(event, element)  {
+    event.stopPropagation();
     HugeNavElement._hideMenu();
     HugeNavElement._showMenu(element);
   }

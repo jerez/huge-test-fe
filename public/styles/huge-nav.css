@@ -13,33 +13,37 @@
     background-image: url('/images/HUGE-white.png');
     background-repeat: no-repeat;
     background-size: 60px 24px;
-    display: inline-block;
+    display: block;
 }
 
 #block-mask {
   position: absolute;
   background-color: var(--translucent-black);
-  left: -5px;
-  right:-5px;
-  top: -5px; /* Header Height */
-  bottom: -5px; /* Footer Height */
+  top: 0px; /* Header Height */
+  bottom: 0px; /* Footer Height */
   z-index: 90;
   width: 100%;
 }
 
 /*Strip the ul of padding and list styling*/
+nav {
+  position: absolute;
+  background-color: var(--magenta);
+  width: 100%;
+  margin: 0;
+  padding:0;
+  z-index: 100;
+}
 ul {
 	list-style-type:none;
 	margin:0;
 	padding:0;
-	position: absolute;
   z-index: 100;
 }
 
 /*Create a horizontal list with spacing*/
 li {
 	display:inline-block;
-	float: left;
 }
 
 /*Style for menu links*/
@@ -50,7 +54,8 @@ li a {
 	text-decoration: none;
   line-height: 24px;
   padding: 24px;
-  display:block;
+  vertical-align: bottom;
+  display: inline-block;
 }
 
 /*Hover state for top level links*/
@@ -62,6 +67,7 @@ li:hover a, .selected-node a {
 /*Style for dropdown links*/
 .selected-node ul {
   display: block;
+  position: absolute;
 }
 .selected-node ul a{
   background: var(--white);
@@ -69,6 +75,7 @@ li:hover a, .selected-node a {
   font-family: Galaxie;
   font-size: 16px;
   padding: 12px 24px;
+  display: block;
 }
 
 /*Hover state for dropdown links*/
@@ -85,7 +92,6 @@ li ul {
 /*Make dropdown links vertical*/
 li ul li {
 	display: block;
-	float: none;
 }
 
 /*Prevent text wrapping*/
@@ -95,20 +101,9 @@ li ul li a {
 	padding: 0 20px;
 }
 
-/*Style 'show menu' label button and hide it by default*/
-.show-menu {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	text-decoration: none;
-	color: #fff;
-	background: #19c589;
-	text-align: center;
-	padding: 10px 0;
-	display: none;
-}
 
 /*Responsive Styles*/
-
-@media screen and (max-width : 760px){
+@media screen and (max-width : 768px){
 	/*Make dropdown links appear inline*/
 	ul {
 		position: static;
@@ -121,9 +116,5 @@ li ul li a {
 	/*Make all menu links full width*/
 	ul li, li a {
 		width: 100%;
-	}
-	/*Display 'show menu' link*/
-	.show-menu {
-		display:block;
 	}
 }
