@@ -1,0 +1,129 @@
+@import 'fonts.css';
+@import 'variables.css';
+
+/* Huge logo styling */
+.brand-container a:hover {
+	background: none;
+  color: none;
+}
+
+.navbar-brand {
+    width: 60px;
+    height: 24px;
+    background-image: url('/images/HUGE-white.png');
+    background-repeat: no-repeat;
+    background-size: 60px 24px;
+    display: inline-block;
+}
+
+#block-mask {
+  position: absolute;
+  background-color: var(--translucent-black);
+  left: -5px;
+  right:-5px;
+  top: -5px; /* Header Height */
+  bottom: -5px; /* Footer Height */
+  z-index: 90;
+  width: 100%;
+}
+
+/*Strip the ul of padding and list styling*/
+ul {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	position: absolute;
+  z-index: 100;
+}
+
+/*Create a horizontal list with spacing*/
+li {
+	display:inline-block;
+	float: left;
+}
+
+/*Style for menu links*/
+li a {
+  font-family: HUGEAvantGardeBold;
+  font-size: 21px;
+  color: var(--white);
+	text-decoration: none;
+  line-height: 24px;
+  padding: 24px;
+  display:block;
+}
+
+/*Hover state for top level links*/
+li:hover a, .selected-node a {
+	background: var(--white);
+  color: var(--magenta);
+}
+
+/*Style for dropdown links*/
+.selected-node ul {
+  display: block;
+}
+.selected-node ul a{
+  background: var(--white);
+  color: var(--black);
+  font-family: Galaxie;
+  font-size: 16px;
+  padding: 12px 24px;
+}
+
+/*Hover state for dropdown links*/
+li:hover ul a:hover {
+	background: var(--light-gray);
+	color: var(--magenta);
+}
+
+/*Hide dropdown links until they are needed*/
+li ul {
+	display: none;
+}
+
+/*Make dropdown links vertical*/
+li ul li {
+	display: block;
+	float: none;
+}
+
+/*Prevent text wrapping*/
+li ul li a {
+	width: auto;
+	min-width: 120px;
+	padding: 0 20px;
+}
+
+/*Style 'show menu' label button and hide it by default*/
+.show-menu {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-decoration: none;
+	color: #fff;
+	background: #19c589;
+	text-align: center;
+	padding: 10px 0;
+	display: none;
+}
+
+/*Responsive Styles*/
+
+@media screen and (max-width : 760px){
+	/*Make dropdown links appear inline*/
+	ul {
+		position: static;
+		display: none;
+	}
+	/*Create vertical spacing*/
+	li {
+		margin-bottom: 1px;
+	}
+	/*Make all menu links full width*/
+	ul li, li a {
+		width: 100%;
+	}
+	/*Display 'show menu' link*/
+	.show-menu {
+		display:block;
+	}
+}
