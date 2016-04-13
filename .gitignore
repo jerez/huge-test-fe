@@ -13,3 +13,5 @@ coverage
 
 # Benchmarking
 benchmarks/graphs
+
+puvlic/main.js
