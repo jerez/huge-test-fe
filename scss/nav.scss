@@ -30,6 +30,9 @@ huge-nav {
       top: 0;
       /* Keeps the menu hidden off-canvas to the left */
       transform: translateX(-100%);
+      &.menu-open {
+        transform: translateX(0);
+      }
     }
    /*General ul style inside nav*/
     ul {
