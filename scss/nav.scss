@@ -1,0 +1,155 @@
+
+$bp-mobile: "screen and (max-width : 768px)";
+$bp-mdesktop: "screen and (max-width : 992px)";
+
+@mixin first-level-scheme {
+  background: var(--white);
+  color: var(--magenta);
+}
+@mixin mscreen-media-scheme {
+  font-size: 18px;
+  line-height: 20px;
+  padding: 20px 16px;
+}
+
+/*Main element*/
+huge-nav {
+
+  /*Navigation element*/
+  nav {
+    position: relative;
+    background-color: var(--magenta);
+    z-index: 100;
+    /*  Mobile menu off-screen */
+    @media #{$bp-mobile}{
+      height: 100%;
+      border-radius: 0;
+      width: 70%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      /* Keeps the menu hidden off-canvas to the left */
+      transform: translateX(-100%);
+    }
+   /*General ul style inside nav*/
+    ul {
+  	   list-style-type:none;
+       margin:0;
+       padding:0;
+       /*General option style inside nav*/
+       li a {
+         text-decoration: none;
+         display: inline-block;
+       }
+     }
+     /*First level menu options*/
+     > ul > li {
+       display: inline-block;
+       > a {
+         font-family: HUGEAvantGardeBold;
+         font-size: 21px;
+         color: var(--white);
+       	 text-decoration: none;
+         line-height: 24px;
+         padding: 24px;
+         &:hover{
+           @include first-level-scheme;
+         }
+         @media #{$bp-mdesktop}{
+           @include mscreen-media-scheme;
+         }
+       }
+       /*Hide dropdown (second level) links until they are needed*/
+       > ul {
+         display: none;
+       }
+     }
+  }
+  /* END OF Navigation element*/
+
+
+  /*Dropdown (second level) styles*/
+  li.selected-node{
+    > a {
+      @include first-level-scheme;
+    }
+    ul {
+      display: block;
+      position: absolute;
+      a {
+        background: var(--white);
+        color: var(--black);
+        font-family: Galaxie;
+        font-size: 16px;
+        padding: 12px 24px;
+        display: block;
+        &:hover{
+          background: var(--light-gray);
+        	color: var(--magenta);
+        }
+      }
+    }
+  }
+
+  /* transluscen mask div style*/
+  #block-mask {
+    position: absolute;
+    background-color: var(--translucent-black);
+    top: 0px;
+    bottom: 0px;
+    z-index: 90;
+    width: 100%;
+  }
+  /* Navigation controls*/
+  #nav-controls{
+    background-color: var(--magenta);
+    /* Button containers */
+    .menu-option {
+      position: relative;
+      float: left;
+      z-index: 110;
+      @media #{$bp-mobile}{
+        float: none;
+      }
+      /* brand container*/
+      &#brand-container{
+        padding: 24px;
+        /* Brand logo */
+        .navbar-brand {
+            width: 60px;
+            height: 24px;
+            background-image: url('/images/HUGE-white.png');
+            background-repeat: no-repeat;
+            background-size: 60px 24px;
+            display: block;
+        }
+        @media #{$bp-mdesktop}{
+          @include mscreen-media-scheme;
+          padding: 20px 24px;
+          .navbar-brand {
+            width: 50px;
+            height: 20px;
+            background-size: 50px 20px;
+          }
+        }
+      }
+
+      /* Hamburger container*/
+      &#mbutton-container{
+        display: none;
+        padding: 20px 24px;
+        /*Hamburguer*/
+        .menu-button {
+            width: 24px;
+            height: 20px;
+            background-image: url('/images/toggle-open.svg');
+            background-repeat: no-repeat;
+            background-size: 24px 20px;
+            &.menu-open {
+              background-image: url('/images/toggle-close.svg');
+            }
+        }
+      }
+    }
+  }
+}

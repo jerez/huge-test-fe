@@ -121,11 +121,34 @@ nav > ul li#menu-button {display: none;}
 @media screen and (max-width:768px) {
 	nav > ul li#menu-button {	display: block; overflow: auto;}
 	/*nav > ul li.menu-button a { float: right}*/
-  nav > ul li:not(#menu-button) {display: none;}
+  /*nav > ul li:not(#menu-button) {display: none;}*/
   /*ul li.icon {*/
     /*float: right;*/
     /*display: inline-block;*/
   /*}*/
+
+
+	nav {
+	height: 100%;
+	border-radius: 0;
+
+	/*
+	 * The width determines how much of the page you want to
+	 * remain visible once the menu slides over
+	 */
+	width: 70%;
+
+	/*
+	 * Must be absolutely positioned otherwise it won't sit
+	 * side by side with the content but instead above it
+	 * */
+	position: absolute;
+	left: 0;
+	top: 0;
+
+	/* Keeps the menu hidden off-canvas to the left */
+	transform: translateX(-100%);
+}
 }
 
 

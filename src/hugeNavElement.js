@@ -26,15 +26,15 @@
 
   // /dynamically create innerHTML
   _initializeElement() {
-    const menuButton = `<li id="menu-button">
+    const menuButton = `<div id="menu-button">
                           <a href="javascript:void(0);" onclick="HugeNavElement._toggleMenu()">&#9776;</a>
-                        </li>`;
+                        </div>`;
     const brand =  `<li id="brand-container" onclick="HugeNavElement._hideMenu()">
                       <a rel="home" href="#" title="HUGE">
                         <span class="navbar-brand"></span>
                       </a>
                     </li>`;
-    this.innerHTML = `<nav>${this._buildNode({items: this.items}, menuButton+brand)}</nav>`;
+    this.innerHTML = `<nav>${this._buildNode({items: this.items}, brand)}</nav>`;
   }
 
   // Recursive function to create the HTML node
