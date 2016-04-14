@@ -10,91 +10,118 @@
 
   // Handles element created
   createdCallback(){
-    // this.addEventListener('click',() => HugeNavElement._hideMask());
-  }
+    this.innerHTML = `<div id="nav-controls">
+                        <h1 class="brand-container">
+                          <a rel="home" href="#" title="HUGE">
+                            <span id="navbar-brand"></span>
+                          </a>
+                        </h1>
+                        <button id="menu-button"></button>
+                      </div>
+                      <nav id="inner-nav">
+                        <span class="copyright">&#169 2016 Huge. All Rights Reserved.</span>
+                      </nav>
+                      <div id="block-mask" style="display:none"></div>`;
 
-  // Handles element atached to DOM
-  attachedCallback(){
-    this.items  = this.items != null ? this.items : this.dataset['items'];
-    this._initializeElement();
+    this.menuButton = this.querySelector('#menu-button');
+    this.innerNav = this.querySelector('#inner-nav');
+    this.navbarBrand = this.querySelector('#navbar-brand');
+    this.blockMask = this.querySelector('#block-mask');
+
+    this.menuButton.addEventListener('click', this._toggleMenu.bind(this));
+    this.blockMask.addEventListener('click', this._hideMenu.bind(this));
+    this.addEventListener('click', this._hideMenu.bind(this));
   }
 
   // Porperties setter
-  set properties(props) {
-    this.items = props.items;
+  set items(items) {
+    // /dynamically add childs to inner-nav element
+    this.innerNav.appendChild(this._buildNode({items: items}, true));
   }
 
-  // /dynamically create innerHTML
-  _initializeElement() {
-    const menuButton = `<div id="menu-button">
-                          <a href="javascript:void(0);" onclick="HugeNavElement._toggleMenu()">&#9776;</a>
-                        </div>`;
-    const brand =  `<li id="brand-container" onclick="HugeNavElement._hideMenu()">
-                      <a rel="home" href="#" title="HUGE">
-                        <span class="navbar-brand"></span>
-                      </a>
-                    </li>`;
-    this.innerHTML = `<nav>${this._buildNode({items: this.items}, brand)}</nav>`;
-  }
-
-  // Recursive function to create the HTML node
-  _buildNode(nodeData, prepend) {
+  // Recursive function to create nodes
+  _buildNode(nodeData, topLevel) {
     if (nodeData.items && nodeData.items.length > 0) {
-      const childsHtml = nodeData.items.map((item) => (
-        `<li onclick="HugeNavElement._handleNodeClick(event, this)"><a href=${item.url} >${item.label} </a>${this._buildNode(item)}</li>`
-      ));
-      return`<ul>${prepend ? prepend : ''}${childsHtml.join('')}</ul>`;
-    }return '';
+      const docFrag = document.createDocumentFragment();
+      for (const key in nodeData.items) {
+        docFrag.appendChild(this._createElement(nodeData.items[key], topLevel));
+      }
+      const ul = document.createElement('ul');
+      ul.appendChild(docFrag);
+      return ul;
+    } return null;
   }
 
-  //Show submenu if element contains any
-  static _showMenu(element){
-    const ulTags = element.getElementsByTagName('ul');
-    if (ulTags.length > 0) {
-      HugeNavElement._showMask();
-      element.className = 'selected-node';
+  // Create single node
+  _createElement(item, topLevel){
+    const li  = document.createElement('li');
+    const a  = document.createElement('a');
+    const linkText = document.createTextNode(item.label);
+
+    a.appendChild(linkText);
+    a.title = item.label;
+    a.href = item.url;
+
+    li.appendChild(a);
+
+    if (topLevel || (item.items && item.items.length > 0)) {
+      a.addEventListener('click', this._showMenu.bind(this));
+      const ul = this._buildNode(item, false);
+      if (ul) { li.appendChild(ul) };
     }
+
+    return li;
   }
 
-  //Hides all presented menus
-  static _hideMenu(){
-    HugeNavElement._hideMask();
-    const nodes = document.querySelectorAll('ul > li.selected-node');
-    for (let i = 0; i < nodes.length; i++) {
-      nodes[i].classList.remove('selected-node');
-    }
-  }
-
-  //Show Mask behind menu
-  static _showMask(){
-    let blockMask = document.getElementById('block-mask');
-    if (!blockMask) {
-      blockMask = document.createElement('div');
-      blockMask.id = 'block-mask';
-      blockMask.addEventListener('click',() => HugeNavElement._hideMenu());
-      document.getElementsByTagName('body')[0].appendChild(blockMask);
-    }
-    blockMask.style.display = 'block';
-  }
-
-  //Hides mask
-  static _hideMask(){
-    let blockMask = document.getElementById('block-mask');
-    if (blockMask) {
-      blockMask.style.display = 'none';
-    }
-  }
-
-  //handles node click
-  static _handleNodeClick(event, element)  {
+  //Shows subMenu
+  _showMenu(event) {
     event.stopPropagation();
-    HugeNavElement._hideMenu();
-    HugeNavElement._showMenu(element);
+    const shown = event.target.parentElement.classList.contains('selected-node');
+    this._hideMenu(null);
+    if(!shown){
+      const ulTags = event.target.parentElement.getElementsByTagName('ul');
+      if (ulTags.length > 0) {
+        this._showMask();
+        event.target.parentElement.classList.add('selected-node');
+      }
+    }
   }
 
-  static _toggleMenu() {
-    let menuButton = document.getElementById('menu-button');
-    menuButton.classList.toggle('menu-open');
+  //Hides submenu
+  _hideMenu(event){
+    if (!event || event.target.tagName != 'A') {
+      this._hideMask();
+      const nodes = this.querySelectorAll('nav > ul > li.selected-node');
+      for (let i = 0; i < nodes.length; i++) {
+        nodes[i].classList.remove('selected-node');
+      }
+    }
+  }
+
+  // shows transluscent mask
+  _showMask(){
+    this.blockMask.style.display = 'block';
+  }
+
+  //Hides transluscent mask
+  _hideMask(){
+    // only hide if mobile menu is closed
+    if (!this.innerNav.classList.contains('menu-open')) {
+      this.blockMask.style.display = 'none';
+    }
+  }
+
+  // Toggle Mobile menu styles
+  _toggleMenu(event) {
+    event.stopPropagation();
+    this.menuButton.classList.toggle('menu-open');
+    this.navbarBrand .classList.toggle('menu-open');
+    this.innerNav.classList.toggle('menu-open');
+    if (this.innerNav.classList.contains('menu-open')) {
+      this._showMask();
+    }else{
+      this._hideMask();
+    }
   }
 
 }

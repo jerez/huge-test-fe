@@ -39,7 +39,7 @@ class HugeNavBuilder {
       //create custom element instance
       var navInstance = new hugeNav;
       // add data to element
-      navInstance.properties = { items: data.items };
+      navInstance.items = data.items ;
       // append element into parent
       parent.appendChild(navInstance);
     });
