@@ -16,12 +16,17 @@ huge-nav {
       huge-nav nav {
         height: 100%;
         border-radius: 0;
-        width: 70%;
+        width: 60%;
         position: absolute;
         left: 0;
-        top: 0;
+        top: 60px;
+        background: var(--white);
+        overflow: hidden;
+        transition: transform 500ms ease;
         /* Keeps the menu hidden off-canvas to the left */
-        transform: translateX(-100%); } }
+        transform: translateX(-100%); }
+        huge-nav nav.menu-open {
+          transform: translateX(0); } }
     huge-nav nav ul {
       list-style-type: none;
       margin: 0;
@@ -33,13 +38,17 @@ huge-nav {
     huge-nav nav > ul > li {
       display: inline-block;
       /*Hide dropdown (second level) links until they are needed*/ }
+      @media screen and (max-width: 768px) {
+        huge-nav nav > ul > li {
+          display: inline; } }
       huge-nav nav > ul > li > a {
         font-family: HUGEAvantGardeBold;
         font-size: 21px;
         color: var(--white);
         text-decoration: none;
         line-height: 24px;
-        padding: 24px; }
+        padding: 24px;
+        margin: 0 -2px; }
         huge-nav nav > ul > li > a:hover {
           background: var(--white);
           color: var(--magenta); }
@@ -47,25 +56,45 @@ huge-nav {
           huge-nav nav > ul > li > a {
             font-size: 18px;
             line-height: 20px;
-            padding: 20px 16px; } }
+            padding: 20px 18px; } }
+        @media screen and (max-width: 768px) {
+          huge-nav nav > ul > li > a {
+            font-size: 24px;
+            line-height: 24px;
+            padding: 12px 24px;
+            width: 100%;
+            color: var(--black); }
+            huge-nav nav > ul > li > a:hover {
+              background-color: var(--light-gray); } }
       huge-nav nav > ul > li > ul {
-        display: none; }
+        position: absolute;
+        max-height: 0;
+        transition: max-height 50ms ease-out;
+        overflow: hidden; }
+        huge-nav nav > ul > li > ul a {
+          background: var(--white);
+          color: var(--black);
+          font-family: Galaxie;
+          font-size: 16px;
+          padding: 12px 24px;
+          display: block; }
+          huge-nav nav > ul > li > ul a:hover {
+            background: var(--light-gray);
+            color: var(--magenta); }
   huge-nav li.selected-node > a {
     background: var(--white);
     color: var(--magenta); }
+    @media screen and (max-width: 768px) {
+      huge-nav li.selected-node > a {
+        color: var(--black); } }
   huge-nav li.selected-node ul {
-    display: block;
-    position: absolute; }
-    huge-nav li.selected-node ul a {
-      background: var(--white);
-      color: var(--black);
-      font-family: Galaxie;
-      font-size: 16px;
-      padding: 12px 24px;
-      display: block; }
-      huge-nav li.selected-node ul a:hover {
-        background: var(--light-gray);
-        color: var(--magenta); }
+    max-height: 500px;
+    transition: max-height 150ms ease-in; }
+    @media screen and (max-width: 768px) {
+      huge-nav li.selected-node ul {
+        position: static; }
+        huge-nav li.selected-node ul a {
+          font-size: 18px; } }
   huge-nav #block-mask {
     position: absolute;
     background-color: var(--translucent-black);
@@ -74,6 +103,8 @@ huge-nav {
     z-index: 90;
     width: 100%; }
   huge-nav #nav-controls {
+    position: relative;
+    z-index: 110;
     background-color: var(--magenta);
     /* brand container*/
     /*Hamburguer*/ }
@@ -105,7 +136,7 @@ huge-nav {
         huge-nav #nav-controls .brand-container {
           font-size: 18px;
           line-height: 20px;
-          padding: 20px 16px;
+          padding: 20px 18px;
           padding: 18px 24px; }
           huge-nav #nav-controls .brand-container .navbar-brand {
             width: 50px;
@@ -133,3 +164,17 @@ huge-nav {
       @media screen and (max-width: 768px) {
         huge-nav #nav-controls #menu-button {
           display: block; } }
+  huge-nav .copyright {
+    position: absolute;
+    display: none;
+    bottom: 60px;
+    left: 0;
+    padding: 18px 24px;
+    font-family: 'helvetica';
+    text-align: left;
+    font-size: 12px;
+    line-height: 12px;
+    color: var(--black); }
+    @media screen and (max-width: 768px) {
+      huge-nav .copyright {
+        display: block; } }

@@ -15,9 +15,9 @@
             <span id="navbar-brand"></span>
           </a>
         </h1>
-        <button id="menu-button" onclick="toggleMenu()"></button>
+        <button id="menu-button" onclick="toggleMenu(event)"></button>
       </div>
-      <nav>
+      <nav id="inner-nav">
         <ul>
         	<li><a href="#/work">Work </a></li>
         	<li>
@@ -66,6 +66,7 @@
         		</ul>
         	</li>
         </ul>
+        <span class="copyright">&#169 2014 Huge. All Rights Reserved.</span>
       </nav>
     </huge-nav>
   </header>
@@ -75,6 +76,9 @@
   	<section class="banner">
   		<h2 class="headline">Get paid for having fun.</h2>
   	</section>
+    <div class="headline-wrapper">
+      <h2 class="headline-mobile">Get paid for having fun.</h2>
+    </div>
     <!-- Content -->
   	<section class="content" >
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -84,18 +88,23 @@
 <script type="text/javascript">
 const showMenu = function(event){
   event.stopPropagation();
-  hideMenu();
-  const ulTags = this.getElementsByTagName('ul');
-  if (ulTags.length > 0) {
-    showMask();
-    this.classList.add('selected-node');
+  const shown = this.parentElement.classList.contains('selected-node');
+  hideMenu(null);
+  if(!shown){
+    const ulTags = this.parentElement.getElementsByTagName('ul');
+    if (ulTags.length > 0) {
+      showMask();
+      this.parentElement.classList.add('selected-node');
+    }
   }
 }
-const hideMenu = function(){
-  hideMask();
-  const nodes = document.querySelectorAll('huge-nav nav > ul > li.selected-node');
-  for (let i = 0; i < nodes.length; i++) {
-    nodes[i].classList.remove('selected-node');
+const hideMenu = function(event){
+  if (!event || event.target.tagName != 'A') {
+    hideMask();
+    const nodes = document.querySelectorAll('huge-nav nav > ul > li.selected-node');
+    for (let i = 0; i < nodes.length; i++) {
+      nodes[i].classList.remove('selected-node');
+    }
   }
 }
 
@@ -112,36 +121,39 @@ function showMask(){
 
 //Hides mask
 function hideMask(){
-  let blockMask = document.getElementById('block-mask');
-  if (blockMask) {
-    blockMask.style.display = 'none';
+  let mainNav = document.getElementById('inner-nav');
+  if (!mainNav.classList.contains('menu-open')) {
+    let blockMask = document.getElementById('block-mask');
+    if (blockMask) {
+      blockMask.style.display = 'none';
+    }
   }
 }
-function toggleMenu() {
+
+function toggleMenu(event) {
+  event.stopPropagation();
+
   let menuButton = document.getElementById('menu-button');
   menuButton.classList.toggle('menu-open');
   let navbarBrand = document.getElementById('navbar-brand');
   navbarBrand.classList.toggle('menu-open');
-  let mainNav = document.getElementById('main-nav');
+  let mainNav = document.getElementById('inner-nav');
   mainNav.classList.toggle('menu-open');
+  if (mainNav.classList.contains('menu-open')) {
+    showMask();
+  }else{
+    hideMask();
+  }
 }
 
 const flNodes = document.querySelectorAll('huge-nav nav > ul > li');
 for (let i = 0; i < flNodes.length; i++) {
-  flNodes[i].addEventListener('click', showMenu);
+  flNodes[i].querySelector('a:first-of-type').addEventListener('click', showMenu);
 }
 
 const mainNav = document.getElementById('main-nav');
 mainNav.addEventListener('click', hideMenu);
 
 
-
-
-// function _showMenu(element){
-//   const ulTags = element.getElementsByTagName('ul');
-//   if (ulTags.length > 0) {
-//     element.className = 'selected-node';
-//   }
-// }
 </script>
 </html>

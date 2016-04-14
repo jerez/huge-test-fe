@@ -1,4 +1,3 @@
-
 $bp-mobile: "screen and (max-width : 768px)";
 $bp-mdesktop: "screen and (max-width : 992px)";
 
@@ -9,7 +8,7 @@ $bp-mdesktop: "screen and (max-width : 992px)";
 @mixin mscreen-media-scheme {
   font-size: 18px;
   line-height: 20px;
-  padding: 20px 16px;
+  padding: 20px 18px;
 }
 
 /*Main element*/
@@ -24,10 +23,14 @@ huge-nav {
     @media #{$bp-mobile}{
       height: 100%;
       border-radius: 0;
-      width: 70%;
+      // width: calc(100% - 72px);
+      width: 60%;
       position: absolute;
       left: 0;
-      top: 0;
+      top: 60px;
+      background: var(--white);
+      overflow: hidden;
+      transition: transform 500ms ease;
       /* Keeps the menu hidden off-canvas to the left */
       transform: translateX(-100%);
       &.menu-open {
@@ -48,6 +51,9 @@ huge-nav {
      /*First level menu options*/
      > ul > li {
        display: inline-block;
+       @media #{$bp-mobile}{
+         display: inline;
+       }
        > a {
          font-family: HUGEAvantGardeBold;
          font-size: 21px;
@@ -55,40 +61,63 @@ huge-nav {
        	 text-decoration: none;
          line-height: 24px;
          padding: 24px;
+         margin: 0 -2px;
          &:hover{
            @include first-level-scheme;
          }
          @media #{$bp-mdesktop}{
            @include mscreen-media-scheme;
          }
+         @media #{$bp-mobile}{
+           font-size: 24px;
+           line-height: 24px;
+           padding: 12px 24px;
+           width: 100%;
+           color: var(--black);
+            &:hover{
+              background-color: var(--light-gray);
+              // color: var(--black);
+            }
+         }
        }
        /*Hide dropdown (second level) links until they are needed*/
        > ul {
-         display: none;
+         position: absolute;
+         max-height: 0;
+         transition: max-height 50ms ease-out;
+         overflow: hidden;
+         a {
+           background: var(--white);
+           color: var(--black);
+           font-family: Galaxie;
+           font-size: 16px;
+           padding: 12px 24px;
+           display: block;
+           &:hover{
+             background: var(--light-gray);
+           	color: var(--magenta);
+           }
+         }
        }
      }
   }
   /* END OF Navigation element*/
 
-
   /*Dropdown (second level) styles*/
   li.selected-node{
     > a {
       @include first-level-scheme;
+      @media #{$bp-mobile}{
+        color: var(--black);
+      }
     }
     ul {
-      display: block;
-      position: absolute;
-      a {
-        background: var(--white);
-        color: var(--black);
-        font-family: Galaxie;
-        font-size: 16px;
-        padding: 12px 24px;
-        display: block;
-        &:hover{
-          background: var(--light-gray);
-        	color: var(--magenta);
+      max-height: 500px;
+      transition: max-height 150ms ease-in;
+      @media #{$bp-mobile}{
+        position: static;
+        a{
+          font-size: 18px;
         }
       }
     }
@@ -105,6 +134,8 @@ huge-nav {
   }
   /* Navigation controls*/
   #nav-controls{
+    position: relative;
+    z-index: 110;
     background-color: var(--magenta);
     @media #{$bp-mobile}{
       display: inline-flex;
@@ -168,6 +199,21 @@ huge-nav {
       @media #{$bp-mobile}{
         display: block;
       }
+    }
+  }
+  .copyright{
+    position: absolute;
+    display: none;
+    bottom: 60px;
+    left: 0;
+    padding: 18px 24px;
+    font-family: 'helvetica';
+    text-align: left;
+    font-size: 12px;
+    line-height: 12px;
+    color: var(--black);
+    @media #{$bp-mobile}{
+      display: block;
     }
   }
 }

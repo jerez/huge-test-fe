@@ -6,17 +6,4 @@
   --black: #000;
   --magenta: #ec008c;
   --light-gray: #eee;
-  --translucent-black: rgba(0, 0, 0, 0.5);
-  /*
-   * Media queries breakpoints
-   * ======================================================================== */
-  --screen-xs-min: 480px;
-  /* Extra small screen / phone */
-  --screen-sp-min: 640px;
-  /* Small screen / phone */
-  --screen-st-min: 768px;
-  /* Small screen / tablet */
-  --screen-md-min: 992px;
-  /* Medium screen / desktop */
-  --screen-lg-min: 1200px;
-  /* Large screen / wide desktop */ }
+  --translucent-black: rgba(0, 0, 0, 0.5); }
