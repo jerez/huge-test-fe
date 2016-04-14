@@ -103,52 +103,67 @@ huge-nav {
   /* Navigation controls*/
   #nav-controls{
     background-color: var(--magenta);
-    /* Button containers */
-    .menu-option {
+    @media #{$bp-mobile}{
+      display: inline-flex;
+      width: 100%;
+    }
+
+    /* brand container*/
+    .brand-container {
       position: relative;
       float: left;
       z-index: 110;
-      @media #{$bp-mobile}{
-        float: none;
-      }
-      /* brand container*/
-      &#brand-container{
-        padding: 24px;
-        /* Brand logo */
-        .navbar-brand {
-            width: 60px;
-            height: 24px;
-            background-image: url('/images/HUGE-white.png');
-            background-repeat: no-repeat;
-            background-size: 60px 24px;
-            display: block;
-        }
-        @media #{$bp-mdesktop}{
-          @include mscreen-media-scheme;
-          padding: 20px 24px;
-          .navbar-brand {
-            width: 50px;
-            height: 20px;
-            background-size: 50px 20px;
+      padding: 24px;
+      margin: 0;
+      /* Brand logo */
+      #navbar-brand {
+        width: 60px;
+        height: 24px;
+        background-image: url('/images/HUGE-white.png');
+        background-repeat: no-repeat;
+        background-size: 60px 24px;
+        display: block;
+        transition: all 500ms ease;
+        @media #{$bp-mobile}{
+          transform: translateX(-100px);
+          &.menu-open {
+            transform: translateX(0);
           }
         }
       }
-
-      /* Hamburger container*/
-      &#mbutton-container{
-        display: none;
-        padding: 20px 24px;
-        /*Hamburguer*/
-        .menu-button {
-            width: 24px;
-            height: 20px;
-            background-image: url('/images/toggle-open.svg');
-            background-repeat: no-repeat;
-            background-size: 24px 20px;
-            &.menu-open {
-              background-image: url('/images/toggle-close.svg');
-            }
+      @media #{$bp-mdesktop}{
+        @include mscreen-media-scheme;
+        padding: 18px 24px;
+        .navbar-brand {
+          width: 50px;
+          height: 20px;
+          background-size: 50px 20px;
         }
+      }
+    }
+    /*Hamburguer*/
+    #menu-button {
+      position: absolute;
+      width: 72px;
+      height: 60px;
+      background-image: url('/images/toggle-open.svg');
+      background-position: center;
+      background-size: cover;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      padding: 0;
+      display: none;
+      cursor: pointer;
+      z-index: 120;
+      left: 0;
+      transition: all 500ms ease;
+      &.menu-open {
+        left: calc(100% - 72px);
+        background-image: url('/images/toggle-close.svg');
+      }
+      @media #{$bp-mobile}{
+        display: block;
       }
     }
   }

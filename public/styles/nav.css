@@ -75,45 +75,61 @@ huge-nav {
     width: 100%; }
   huge-nav #nav-controls {
     background-color: var(--magenta);
-    /* Button containers */ }
-    huge-nav #nav-controls .menu-option {
+    /* brand container*/
+    /*Hamburguer*/ }
+    @media screen and (max-width: 768px) {
+      huge-nav #nav-controls {
+        display: inline-flex;
+        width: 100%; } }
+    huge-nav #nav-controls .brand-container {
       position: relative;
       float: left;
       z-index: 110;
-      /* brand container*/
-      /* Hamburger container*/ }
+      padding: 24px;
+      margin: 0;
+      /* Brand logo */ }
+      huge-nav #nav-controls .brand-container #navbar-brand {
+        width: 60px;
+        height: 24px;
+        background-image: url("/images/HUGE-white.png");
+        background-repeat: no-repeat;
+        background-size: 60px 24px;
+        display: block;
+        transition: all 500ms ease; }
+        @media screen and (max-width: 768px) {
+          huge-nav #nav-controls .brand-container #navbar-brand {
+            transform: translateX(-100px); }
+            huge-nav #nav-controls .brand-container #navbar-brand.menu-open {
+              transform: translateX(0); } }
+      @media screen and (max-width: 992px) {
+        huge-nav #nav-controls .brand-container {
+          font-size: 18px;
+          line-height: 20px;
+          padding: 20px 16px;
+          padding: 18px 24px; }
+          huge-nav #nav-controls .brand-container .navbar-brand {
+            width: 50px;
+            height: 20px;
+            background-size: 50px 20px; } }
+    huge-nav #nav-controls #menu-button {
+      position: absolute;
+      width: 72px;
+      height: 60px;
+      background-image: url("/images/toggle-open.svg");
+      background-position: center;
+      background-size: cover;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      padding: 0;
+      display: none;
+      cursor: pointer;
+      z-index: 120;
+      left: 0;
+      transition: all 500ms ease; }
+      huge-nav #nav-controls #menu-button.menu-open {
+        left: calc(100% - 72px);
+        background-image: url("/images/toggle-close.svg"); }
       @media screen and (max-width: 768px) {
-        huge-nav #nav-controls .menu-option {
-          float: none; } }
-      huge-nav #nav-controls .menu-option#brand-container {
-        padding: 24px;
-        /* Brand logo */ }
-        huge-nav #nav-controls .menu-option#brand-container .navbar-brand {
-          width: 60px;
-          height: 24px;
-          background-image: url("/images/HUGE-white.png");
-          background-repeat: no-repeat;
-          background-size: 60px 24px;
-          display: block; }
-        @media screen and (max-width: 992px) {
-          huge-nav #nav-controls .menu-option#brand-container {
-            font-size: 18px;
-            line-height: 20px;
-            padding: 20px 16px;
-            padding: 20px 24px; }
-            huge-nav #nav-controls .menu-option#brand-container .navbar-brand {
-              width: 50px;
-              height: 20px;
-              background-size: 50px 20px; } }
-      huge-nav #nav-controls .menu-option#mbutton-container {
-        display: none;
-        padding: 20px 24px;
-        /*Hamburguer*/ }
-        huge-nav #nav-controls .menu-option#mbutton-container .menu-button {
-          width: 24px;
-          height: 20px;
-          background-image: url("/images/toggle-open.svg");
-          background-repeat: no-repeat;
-          background-size: 24px 20px; }
-          huge-nav #nav-controls .menu-option#mbutton-container .menu-button.menu-open {
-            background-image: url("/images/toggle-close.svg"); }
+        huge-nav #nav-controls #menu-button {
+          display: block; } }

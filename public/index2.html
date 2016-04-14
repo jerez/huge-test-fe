@@ -9,18 +9,14 @@
   <!-- Header :: nav -->
   <header id="header">
     <huge-nav id="main-nav">
-      <section id="nav-controls">
-        <div id="brand-container" class="menu-option">
+      <div id="nav-controls">
+        <h1 class="brand-container">
           <a rel="home" href="#" title="HUGE">
-            <span class="navbar-brand"></span>
+            <span id="navbar-brand"></span>
           </a>
-        </div>
-        <div id="mbutton-container" class="menu-option">
-          <a rel="home" href="#" title="HUGE">
-            <span class="menu-button"></span>
-          </a>
-        </div>
-      </section>
+        </h1>
+        <button id="menu-button" onclick="toggleMenu()"></button>
+      </div>
       <nav>
         <ul>
         	<li><a href="#/work">Work </a></li>
@@ -121,7 +117,12 @@ function hideMask(){
     blockMask.style.display = 'none';
   }
 }
-
+function toggleMenu() {
+  let menuButton = document.getElementById('menu-button');
+  menuButton.classList.toggle('menu-open');
+  let navbarBrand = document.getElementById('navbar-brand');
+  navbarBrand.classList.toggle('menu-open');
+}
 
 const flNodes = document.querySelectorAll('huge-nav nav > ul > li');
 for (let i = 0; i < flNodes.length; i++) {
