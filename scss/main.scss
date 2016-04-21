@@ -1,8 +1,6 @@
-@import 'fonts.css';
-@import 'variables.css';
-@import 'nav.css';
-
-$bp-mobile: "screen and (max-width : 768px)";
+@import 'fonts';
+@import 'variables';
+@import 'nav';
 
 body, html {
   margin:0;
@@ -10,8 +8,8 @@ body, html {
 }
 
 body {
-  background: var(--white);
-  color: var(--white);
+  background: $color-white;
+  color: $color-white;
 }
 
 main {
@@ -19,7 +17,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    max-height: 640px;
+    height: 640px;
     background: url(/images/background-image.jpg) center;
     background-size: cover;
     padding: 0 24px;
@@ -30,7 +28,7 @@ main {
       text-align: center;
     }
     @media #{$bp-mobile}{
-      max-height: 240px;
+      height: 240px;
       .headline {
         color: transparent;
       }
@@ -44,7 +42,7 @@ main {
       letter-spacing: -0.06em;
       text-align: center;
       font-size: 44px;
-      color: var(--black);
+      color: $color-black;
       margin-top: 50px;
       margin-bottom: 0;
       @media #{$bp-mobile}{
@@ -56,7 +54,7 @@ main {
     margin-top: 60px;
     font-family: Galaxie;
     font-size: 24px;
-    color: var(--black);
+    color: $color-black;
     padding: 0 24px;
     p {
       margin: 0 auto;
