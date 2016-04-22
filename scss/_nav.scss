@@ -21,7 +21,8 @@ huge-nav {
     @media #{$bp-mobile}{
       height: 100%;
       border-radius: 0;
-      // width: calc(100% - 72px);
+      // max-width: calc(100% - 72px);
+      min-width: 180px;
       width: 60%;
       position: absolute;
       left: 0;
@@ -66,10 +67,10 @@ huge-nav {
            @include mscreen-media-scheme;
          }
          @media #{$bp-mobile}{
+           display: block;
            font-size: 24px;
            line-height: 24px;
            padding: 12px 24px;
-           width: 100%;
            color: $color-black;
             &:hover{
               background-color: $color-light-gray;
@@ -98,6 +99,27 @@ huge-nav {
      }
   }
   /* END OF Navigation element*/
+  .chevron {
+    float: right;
+  }
+  .chevron:before {
+    transition: all 100ms ease;
+    border-style: solid;
+    border-width: 2px 2px 0 0;
+    border-color: $color-magenta;
+    content: '';
+    display: none;
+    height: 12px;
+    right: 12px;
+    position: relative;
+    top: 0;
+    transform: rotate(135deg);
+    vertical-align: top;
+    width: 12px;
+    @media #{$bp-mobile}{
+      display: inline-block;
+    }
+  }
 
   /*Dropdown (second level) styles*/
   li.selected-node{
@@ -105,6 +127,10 @@ huge-nav {
       @include first-level-scheme;
       @media #{$bp-mobile}{
         color: $color-black;
+      }
+      .chevron::before {
+        top: 12px;
+        transform: rotate(-45deg);
       }
     }
     ul {
@@ -127,6 +153,10 @@ huge-nav {
     bottom: 0px;
     z-index: 90;
     width: 100%;
+    display: none;
+  }
+  #block-mask.menu-open {
+      display: block;
   }
   /* Navigation controls*/
   #nav-controls{

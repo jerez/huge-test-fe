@@ -21,7 +21,7 @@
                       <nav id="inner-nav">
                         <span class="copyright">&#169 2016 Huge. All Rights Reserved.</span>
                       </nav>
-                      <div id="block-mask" style="display:none"></div>`;
+                      <div id="block-mask"></div>`;
 
     this.menuButton = this.querySelector('#menu-button');
     this.innerNav = this.querySelector('#inner-nav');
@@ -66,6 +66,11 @@
 
     if (topLevel || (item.items && item.items.length > 0)) {
       a.addEventListener('click', this._showMenu.bind(this));
+      if (item.items && item.items.length > 0) {
+        const chevronSpan = document.createElement('span');
+        chevronSpan.classList.add('chevron');
+        a.appendChild(chevronSpan)
+      }
       const ul = this._buildNode(item, false);
       if (ul) { li.appendChild(ul) };
     }
@@ -76,54 +81,52 @@
   //Shows subMenu
   _showMenu(event) {
     event.stopPropagation();
-    const shown = event.target.parentElement.classList.contains('selected-node');
-    this._hideMenu(null);
-    if(!shown){
-      const ulTags = event.target.parentElement.getElementsByTagName('ul');
-      if (ulTags.length > 0) {
-        this._showMask();
-        event.target.parentElement.classList.add('selected-node');
+
+    const parent = event.target.parentElement;
+    const shown = parent.classList.contains('selected-node');
+    var viewPort = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
+    var isMobileVp = (viewPort <= 768);
+
+    this._hideMenu(event);
+
+    const ulTags = parent.getElementsByTagName('ul');
+    if (ulTags.length > 0) {
+      if (!isMobileVp || (isMobileVp && !shown)) {
+        parent.classList.add('selected-node');
       }
+      this._setMenuOpenClass(true);
     }
   }
 
   //Hides submenu
-  _hideMenu(event){
-    if (!event || event.target.tagName != 'A') {
-      this._hideMask();
-      const nodes = this.querySelectorAll('nav > ul > li.selected-node');
-      for (let i = 0; i < nodes.length; i++) {
-        nodes[i].classList.remove('selected-node');
-      }
+  _hideMenu() {
+    this._setMenuOpenClass(false);
+    const nodes = this.querySelectorAll('nav > ul > li.selected-node');
+    for (let i = 0; i < nodes.length; i++) {
+      nodes[i].classList.remove('selected-node');
     }
   }
 
-  // shows transluscent mask
-  _showMask(){
-    this.blockMask.style.display = 'block';
-  }
-
-  //Hides transluscent mask
-  _hideMask(){
-    // only hide if mobile menu is closed
-    if (!this.innerNav.classList.contains('menu-open')) {
-      this.blockMask.style.display = 'none';
+  _setMenuOpenClass(open){
+    if (open) {
+      this.menuButton.classList.add('menu-open');
+      this.navbarBrand.classList.add('menu-open');
+      this.innerNav.classList.add('menu-open');
+      this.blockMask.classList.add('menu-open');
+    }else {
+      this.menuButton.classList.remove('menu-open');
+      this.navbarBrand.classList.remove('menu-open');
+      this.innerNav.classList.remove('menu-open');
+      this.blockMask.classList.remove('menu-open');
     }
   }
 
   // Toggle Mobile menu styles
   _toggleMenu(event) {
-    event.stopPropagation();
-    this.menuButton.classList.toggle('menu-open');
-    this.navbarBrand .classList.toggle('menu-open');
-    this.innerNav.classList.toggle('menu-open');
-    if (this.innerNav.classList.contains('menu-open')) {
-      this._showMask();
-    }else{
-      this._hideMask();
-    }
+    if (event) event.stopPropagation();
+    var shown = this.innerNav.classList.contains('menu-open');
+    this._setMenuOpenClass(!shown);
   }
-
 }
 
 //Register custom Element
